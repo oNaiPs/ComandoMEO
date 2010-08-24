@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+      package="org.onaips.comandomeo"
+      android:versionCode="5" android:versionName="0.1b2">
+    <application android:icon="@drawable/icon" android:label="@string/app_name" android:debuggable="false">
+        <activity android:label="@string/app_name" android:name="MEO_comando" android:launchMode="singleInstance" android:screenOrientation="portrait">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+
+    <activity android:name="preferences" android:label="Preferences"></activity>
+     <!-- The application's publisher ID assigned by AdMob -->
+    <meta-data android:value="a14c463e656a871" android:name="ADMOB_PUBLISHER_ID" />
+</application>
+
+<uses-permission android:name="android.permission.INTERNET"></uses-permission>
+<uses-permission android:name="android.permission.VIBRATE"></uses-permission>
+
+<uses-sdk android:minSdkVersion="4"></uses-sdk>
+
+</manifest> 

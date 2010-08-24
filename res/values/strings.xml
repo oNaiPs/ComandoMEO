@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="hello">Hello World, Hello!</string>
+    <string name="app_name">Comando MEO</string>
+<color name="white">#FFFFFFFF</color>
+
+
+<string-array name="meo_string"><item>Meo 1</item>
+<item>Meo 2</item>
+<item>Meo 3</item>
+</string-array>
+<string-array name="meo_servers"><item>server1</item>
+<item>server2</item>
+<item>server3</item>
+</string-array>
+
+
+<string-array name="vol_bindings"><item>Pg up/down</item>
+<item>Vol up/down</item>
+</string-array>
+<string-array name="vol_idents"><item>pgupdown</item>
+<item>volupdown</item>
+</string-array>
+</resources>

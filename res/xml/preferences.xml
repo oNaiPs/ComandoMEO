@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen
+  xmlns:android="http://schemas.android.com/apk/res/android">
+<ListPreference android:key="active" android:title="MEO actual" android:entries="@array/meo_string" android:entryValues="@array/meo_servers"></ListPreference>
+<EditTextPreference android:key="server1" android:title="IP MEO 1"></EditTextPreference>
+<EditTextPreference android:key="server2" android:title="IP MEO 2"></EditTextPreference>
+<EditTextPreference android:key="server3" android:title="IP MEO 3"></EditTextPreference>
+<ListPreference android:title="Função Teclas de Volume" android:key="volkeys" android:entryValues="@array/vol_idents" android:entries="@array/vol_bindings"></ListPreference>
+</PreferenceScreen>
