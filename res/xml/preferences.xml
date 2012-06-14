@@ -1,9 +1,59 @@
 <?xml version="1.0" encoding="utf-8"?>
-<PreferenceScreen
-  xmlns:android="http://schemas.android.com/apk/res/android">
-<ListPreference android:key="active" android:title="MEO actual" android:entries="@array/meo_string" android:entryValues="@array/meo_servers"></ListPreference>
-<EditTextPreference android:key="server1" android:title="IP MEO 1"></EditTextPreference>
-<EditTextPreference android:key="server2" android:title="IP MEO 2"></EditTextPreference>
-<EditTextPreference android:key="server3" android:title="IP MEO 3"></EditTextPreference>
-<ListPreference android:title="Função Teclas de Volume" android:key="volkeys" android:entryValues="@array/vol_idents" android:entries="@array/vol_bindings"></ListPreference>
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android" >
+
+    <PreferenceCategory android:title="Endereço das boxes" >
+        <EditTextPreference
+            android:defaultValue="192.168.1.64"
+            android:key="server1"
+            android:title="IP MEO 1" >
+        </EditTextPreference>
+        <EditTextPreference
+            android:defaultValue="192.168.1.65"
+            android:key="server2"
+            android:title="IP MEO 2" >
+        </EditTextPreference>
+        <EditTextPreference
+            android:defaultValue="192.168.1.66"
+            android:key="server3"
+            android:title="IP MEO 3" >
+        </EditTextPreference>
+    </PreferenceCategory>
+    <PreferenceCategory android:title="Configurações adicionais" >
+        <org.onaips.comandomeo.SeekBarPreference
+            xmlns:example="http://schemas.android.com/apk/res/org.onaips.comandomeo"
+            android:dialogTitle="Tamanho do comando"
+            android:key="scaleComando"
+            android:defaultValue="100"
+            example:maxValue="100"
+            example:minValue="30"
+            android:persistent="true"
+            android:summary="Permite introduzir a escala do comando, desde 30\% até 100\% da largura do ecrã."
+            android:title="Tamanho do comando" />
+
+        <ListPreference
+            android:defaultValue="pgupdown"
+            android:entries="@array/vol_bindings"
+            android:entryValues="@array/vol_idents"
+            android:key="volkeys"
+            android:summary="Mapeia as teclas de volume ao comando."
+            android:title="Função Teclas de Volume" >
+        </ListPreference>
+
+        <CheckBoxPreference
+            android:defaultValue="false"
+            android:key="fullscreen"
+            android:summary="Permite visualizar o comando em ecrã completo."
+            android:title="Esconder barra superior" />
+        <CheckBoxPreference
+            android:defaultValue="true"
+            android:key="viewad"
+            android:summary="A visualização de anúncios contribui para o desenvolvimento desta aplicação."
+            android:title="Visualizar anúncios" />
+    </PreferenceCategory>
+    <PreferenceCategory android:title="Sobre" >
+        <Preference
+            android:key="about"
+            android:title="Sobre" />
+    </PreferenceCategory>
+
 </PreferenceScreen>

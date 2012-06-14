@@ -1,37 +1,33 @@
 <?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout 
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:ads="http://schemas.android.com/apk/lib/com.google.ads"
+    android:id="@+id/mainLayout"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content" >
 
+    <ScrollView
+        android:id="@+id/ScrollView01"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content" >
+ 
+        <ImageView
+            android:id="@+id/ImageView01"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="right"
+        >
+        </ImageView>
+    </ScrollView>
 
-
-<RelativeLayout
-xmlns:myapp="http://schemas.android.com/apk/res/org.onaips.comandomeo"
-xmlns:android="http://schemas.android.com/apk/res/android"
-android:id="@+id/RelativeLayout01" 
-android:layout_width="wrap_content" 
-android:layout_height="wrap_content">
-
-<ScrollView   
-android:layout_width="fill_parent" 
-android:layout_height="fill_parent"
-android:id="@+id/ScrollView01" >
-
-
-<ImageView android:id="@+id/ImageView01" 
-android:layout_width="wrap_content" 
-android:layout_height="wrap_content" 
-android:background="@drawable/comando">
-
-
-</ImageView>
-
-</ScrollView>
-<com.admob.android.ads.AdView
-android:id="@+id/ad"
-android:layout_width="wrap_content"
-android:layout_height="wrap_content"
-myapp:backgroundColor="#000000"
-myapp:primaryTextColor="#FFFFFF"
-myapp:secondaryTextColor="#CCCCCC"
-android:layout_gravity="bottom"
-android:layout_alignParentBottom="true" />
+    <com.google.ads.AdView
+        android:id="@+id/adView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_gravity="bottom"
+        ads:adSize="BANNER"
+        ads:adUnitId="a14c463e656a871"
+        ads:loadAdOnCreate="true" />
 
 </RelativeLayout>
