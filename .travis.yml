@@ -1,0 +1,15 @@
+language: android
+script:
+- ant release
+android:
+  components:
+  - build-tools-19.1.0
+  - android-19
+deploy:
+  provider: releases
+  api_key:
+    secure: gw+yomXdfbHKcXl5AhLIy0RPccA3sA1+5q+TdsJRvMv8g0k6Qsdrx8lzMBAKdh790EbnbY8rI8JhoX4AazMwN66pV/EaOo5abVaHSORxEqYXMwim4YZPsOKeD0gGn7XRXQvoSsMqm5DJWnQtMKNXiqV1E4BT/8uua2BdmkL+kWE=
+  file: bin/Remotium-release-unsigned.apk
+  on:
+    tags: true
+    repo: oNaiPs/Comando-MEO
