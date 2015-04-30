@@ -3,3 +3,6 @@ gen/
 .project
 .classpath
 .settings
+build/
+*.properties
+.gradle

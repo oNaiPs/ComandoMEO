@@ -10,15 +10,11 @@ public class Keys {
 	static int [] meo_1_y = {159,159,159,277,277,277,397,397,397,515,515,515	,40		,686,686,991	,991	,815,1113	,1198	,1198	,1198	,1198	,1325	,1325	,1325	,1444	,1444	,1444	,689	,990	,809	,809	,1600	,1600	,1600	,1600	,1715	,1715	,1715	,1715	,1826	,1826	,1826	,1826};
 	static int [] meo_2_y = {256,256,256,377,377,377,497,497,497,615,615,615	,140	,793,793,1099	,1099	,972,1170	,1276	,1276	,1276	,1276	,1425	,1425	,1425	,1544	,1544	,1544	,800	,1090	,975	,975	,1680	,1680	,1680	,1680	,1795	,1795	,1795	,1795	,1906	,1906	,1906	,1906};
 
-
-	static void checkArrays()
-	{
-		if (
-				Keys.meo_key.length!=Keys.meo_1_x.length || 
-				Keys.meo_key.length!=Keys.meo_1_y.length ||
-				Keys.meo_key.length!=Keys.meo_2_x.length ||
-				Keys.meo_key.length!=Keys.meo_2_y.length)
-		{
+	static void checkArrays() {
+		if (Keys.meo_key.length != Keys.meo_1_x.length || 
+				Keys.meo_key.length != Keys.meo_1_y.length ||
+				Keys.meo_key.length != Keys.meo_2_x.length ||
+				Keys.meo_key.length != Keys.meo_2_y.length) {
 			Log.e("COMANDOMEO","Error, key arrays do not match!");
 			System.exit(-1);
 		}

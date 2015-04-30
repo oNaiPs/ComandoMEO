@@ -1,58 +1,53 @@
 <?xml version="1.0" encoding="utf-8"?>
 <PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android" >
 
-    <PreferenceCategory android:title="Endereço das boxes" >
+    <PreferenceCategory android:title="@string/box_addresses" >
         <EditTextPreference
-            android:defaultValue="192.168.1.64"
-            android:key="server1"
+            android:defaultValue="@string/server_1_default"
+            android:key="@string/server_1_key"
             android:title="IP MEO 1" >
         </EditTextPreference>
         <EditTextPreference
-            android:defaultValue="192.168.1.65"
-            android:key="server2"
+            android:defaultValue="@string/server_2_default"
+            android:key="@string/server_2_key"
             android:title="IP MEO 2" >
         </EditTextPreference>
         <EditTextPreference
-            android:defaultValue="192.168.1.66"
-            android:key="server3"
+            android:defaultValue="@string/server_3_default"
+            android:key="@string/server_3_key"
             android:title="IP MEO 3" >
         </EditTextPreference>
     </PreferenceCategory>
-    <PreferenceCategory android:title="Configurações adicionais" >
-        <org.onaips.comandomeo.SeekBarPreference
-            xmlns:example="http://schemas.android.com/apk/res/org.onaips.comandomeo"
-            android:dialogTitle="Tamanho do comando"
-            android:key="scaleComando"
-            android:defaultValue="100"
-            example:maxValue="100"
-            example:minValue="30"
-            android:persistent="true"
-            android:summary="Permite introduzir a escala do comando, desde 30\% até 100\% da largura do ecrã."
-            android:title="Tamanho do comando" />
-
+    <PreferenceCategory android:title="@string/additional_settings" >
+        <ListPreference
+            android:defaultValue="@string/ui_scale_default"
+            android:entries="@array/ui_scale_strings"
+            android:entryValues="@array/ui_scale_keys"
+            android:key="@string/ui_scale_key"
+            android:title="@string/ui_scale_title" />
         <ListPreference
             android:defaultValue="pgupdown"
             android:entries="@array/vol_bindings"
             android:entryValues="@array/vol_idents"
             android:key="volkeys"
-            android:summary="Mapeia as teclas de volume ao comando."
-            android:title="Função Teclas de Volume" >
+            android:summary="@string/map_volume_keys_summary"
+            android:title="@string/map_volume_keys" >
         </ListPreference>
 
         <CheckBoxPreference
             android:defaultValue="false"
-            android:key="fullscreen"
-            android:summary="Permite visualizar o comando em ecrã completo."
-            android:title="Esconder barra superior" />
+            android:key="@string/ui_fullscreen_key"
+            android:summary="@string/hide_status_bar_summary"
+            android:title="@string/hide_status_bar" />
         <CheckBoxPreference
             android:defaultValue="true"
-            android:key="viewad"
-            android:summary="A visualização de anúncios contribui para o desenvolvimento desta aplicação."
-            android:title="Visualizar anúncios" />
+            android:key="@string/ui_viewad_key"
+            android:summary="@string/enable_ad_visualization_summary"
+            android:title="@string/enable_ad_visualization" />
     </PreferenceCategory>
     <PreferenceCategory android:title="Sobre" >
         <Preference
-            android:key="about"
+            android:key="@string/ui_about_key"
             android:title="Sobre" />
     </PreferenceCategory>
 

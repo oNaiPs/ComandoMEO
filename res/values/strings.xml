@@ -25,7 +25,62 @@
         <item>volupdown</item>
         <item>off</item>
     </string-array>
+    <string-array name="ui_scale_strings">
+        <item>100%</item>
+        <item>90%</item>
+        <item>75%</item>
+        <item>50%</item>
+    </string-array>
+    <string-array name="ui_scale_keys">
+        <item>100</item>
+        <item>90</item>
+        <item>75</item>
+        <item>50</item>
+    </string-array>
+
+    <string name="preferences">Preferências</string>
+    <string name="reconnect">Reconetar</string>
+    <string name="reconnect_after_changes_warn">Não te esqueças de reconetar depois de efetuares as alterações.</string>
+    <string name="select_active_box">Seleciona a box ativa</string>
+    <string name="non_implemented_keyboard_warn">Botão não implementado\n\n(keycode desconhecido)</string>
+    <string name="selectbox">Selecionar Box</string>
+    <string name="quit">Sair</string>
+    <string name="inactive_connection_to_box">Erro: A ligação com o MEO não está ativa.</string>
+    <string name="restart_app_title">Reiniciar Aplicação?</string>
+    <string name="restart_app_prompt">Para que as alterações sejam efetuadas deves reiniciar a aplicação. Poderás reiniciar mais tarde no menu de contexto.</string>
+    <string name="yes">Sim</string>
+    <string name="no">Não</string>
+    <string name="box_addresses">Endereço das boxes</string>
+    <string name="additional_settings">Configurações adicionais</string>
+    <string name="close">Fechar</string>
+    <string name="hide_status_bar">Esconder barra de notificações</string>
+    <string name="hide_status_bar_summary">Permite visualizares o comando em ecrã completo.</string>
+    <string name="enable_ad_visualization">Visualizar anúncios</string>
+    <string name="enable_ad_visualization_summary">Ativa/desativa a visualização de anúncios. Se mantiveres ativado, estás a contribuir para o desenvolvimento desta aplicação.</string>
+    <string name="map_volume_keys">Função Teclas de Volume</string>
+    <string name="map_volume_keys_summary">Mapeia as teclas de volume ao comando.</string>
+    <string name="timeout_finding_box">Timeout a encontrar box\n\nTenta reconetar ou verifica as preferências\n\n- Servidor actual: %1$s (%2$s)</string>
+    <string name="box_not_found">O servidor não foi encontrado, verifique as prefêrencias\n\n- Servidor actual: %1$s (%2$s)</string>
+    <string name="invalid_ip_address">O IP introduzido %1$s não é válido.</string>
+    <string name="connected_to_box">Ligado a meo: %1$s</string>
+    <string name="project_website">https://github.com/oNaiPs/ComandoMEO</string>
 
     <color name="white_color">#fff</color>
     <color name="gray_color">#aaa</color>
+
+    <string name="ui_scale_title">Tamanho do comando</string>
+    <string name="ui_fullscreen_key">fullscreen</string>
+    <string name="ui_viewad_key">viewad</string>
+    <string name="ui_about_key">about</string>
+    <string name="ui_scale_key">ui_scale</string>
+    <string name="ui_scale_default">100</string>
+    <string name="active_server_key">active</string>
+    <string name="server_1_key">server1</string>
+    <string name="server_2_key">server2</string>
+    <string name="server_3_key">server3</string>
+    <string name="server_1_default">192.168.1.64</string>
+    <string name="server_2_default">192.168.1.65</string>
+    <string name="server_3_default">192.168.1.66</string>
+    <string name="banner_ad_unit_id">ca-app-pub-6447557904423437/2246374888</string>
+
 </resources>
