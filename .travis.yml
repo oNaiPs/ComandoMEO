@@ -1,6 +1,6 @@
 language: android
 script:
-  - ./gradlew build
+  - ./gradlew assembleDebug
 android:
   components:
   - extra-google-google_play_services
@@ -10,7 +10,7 @@ deploy:
   provider: releases
   api_key:
     secure: gw+yomXdfbHKcXl5AhLIy0RPccA3sA1+5q+TdsJRvMv8g0k6Qsdrx8lzMBAKdh790EbnbY8rI8JhoX4AazMwN66pV/EaOo5abVaHSORxEqYXMwim4YZPsOKeD0gGn7XRXQvoSsMqm5DJWnQtMKNXiqV1E4BT/8uua2BdmkL+kWE=
-  file: ./build/outputs/apk/ComandoMEO-release-unsigned.apk
+  file: ./build/outputs/apk/ComandoMEO-debug.apk
   on:
     tags: true
     repo: oNaiPs/ComandoMEO
