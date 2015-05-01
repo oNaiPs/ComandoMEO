@@ -4,9 +4,10 @@
     android:versionCode="9"
     android:versionName="0.6" >
 
+    <!-- Use target sdk 13 to show menu button on navigation bar -->
     <uses-sdk
         android:minSdkVersion="9"
-        android:targetSdkVersion="22" >
+        android:targetSdkVersion="13" >
     </uses-sdk>
 
     <uses-permission android:name="android.permission.INTERNET" />
