@@ -1,9 +1,7 @@
 package org.onaips.comandomeo;
 
-import java.io.BufferedInputStream;
 import java.io.BufferedReader;
 import java.io.IOException;
-import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.PrintWriter;
 import java.net.InetAddress;
@@ -11,6 +9,7 @@ import java.net.MalformedURLException;
 import java.net.Socket;
 import java.net.URL;
 import java.net.UnknownHostException;
+
 import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.app.AlertDialog;
@@ -18,12 +17,9 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.content.SharedPreferences.Editor;
-import android.content.res.AssetManager;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Matrix;
-import android.graphics.Rect;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.HandlerThread;
@@ -42,6 +38,7 @@ import android.view.Window;
 import android.view.WindowManager;
 import android.widget.ImageView;
 import android.widget.Toast;
+
 import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.AdView;
 
@@ -57,6 +54,8 @@ public class MainActivity extends Activity {
 	private static final int MENU_QUIT = 0;
 	private static final int MENU_RECONNECT = 1;
 	private static final int MENU_SELECTMEO = 2;
+
+	private static final int VIBRATION_PERIOD = 50;
 
 	private HandlerThread mConnectionThread;
 	private Handler mConnectionHandler;
@@ -205,31 +204,29 @@ public class MainActivity extends Activity {
 	}
 
 	public void findAndCommitButton(float x,float y) {
-		//		Log.v(TAG , "OLD\t\t" + x + " x " + y);
-
 		float realScale = mDisplayWidth / (float)REAL_COMANDO_WIDTH;
 
-		float userScale=mPreferences.getInt("scaleComando", 100);
-		realScale*=userScale/100.0F;
+		float userScale = mPreferences.getInt("scaleComando", 100);
+		realScale *= userScale / 100.0F;
 
-		x-=(mDisplayWidth-(userScale*mDisplayWidth)/100.0F)/2.0F;
+		x -= (mDisplayWidth - (userScale * mDisplayWidth) / 100.0F) / 2.0F;
 
-		x/=realScale;
-		y/=realScale;
+		x /= realScale;
+		y /= realScale;
 
-		//		Log.v(TAG , "NEW\t\t" + x + " x " + y);
-
-		for (int i=0;i<Keys.meo_key.length;i++){
-			if (x>Keys.meo_1_x[i] && x<Keys.meo_2_x[i] && y > Keys.meo_1_y[i] && y<Keys.meo_2_y[i])
-			{
-				mVibrator.vibrate(50);
+		for (int i = 0; i < Keys.meo_key.length; i++){
+			if (x > Keys.meo_1_x[i] &&
+					x < Keys.meo_2_x[i] &&
+					y > Keys.meo_1_y[i] &&
+					y < Keys.meo_2_y[i]) {
+				if (mPreferences.getBoolean(getString(R.string.ui_vibration_key), true)) {
+					mVibrator.vibrate(VIBRATION_PERIOD);
+				}
 				sendButton(Keys.meo_key[i]);
 				return;
 			}
-
 		}			
 	}
-
 
 	public void sendButton(final int button) {
 		mConnectionHandler.post(new Runnable() {

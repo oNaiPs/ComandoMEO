@@ -41,6 +41,10 @@
             android:title="@string/hide_status_bar" />
         <CheckBoxPreference
             android:defaultValue="true"
+            android:key="@string/ui_vibration_key"
+            android:title="@string/enable_vibration" />
+        <CheckBoxPreference
+            android:defaultValue="true"
             android:key="@string/ui_viewad_key"
             android:summary="@string/enable_ad_visualization_summary"
             android:title="@string/enable_ad_visualization" />

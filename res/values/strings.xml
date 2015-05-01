@@ -64,6 +64,7 @@
     <string name="invalid_ip_address">O IP introduzido %1$s não é válido.</string>
     <string name="connected_to_box">Ligado a meo: %1$s</string>
     <string name="project_website">https://github.com/oNaiPs/ComandoMEO</string>
+    <string name="enable_vibration">Vibrar os botões</string>
 
     <color name="white_color">#fff</color>
     <color name="gray_color">#aaa</color>
@@ -73,6 +74,7 @@
     <string name="ui_viewad_key">viewad</string>
     <string name="ui_about_key">about</string>
     <string name="ui_scale_key">ui_scale</string>
+    <string name="ui_vibration_key">vibration</string>
     <string name="ui_scale_default">100</string>
     <string name="active_server_key">active</string>
     <string name="server_1_key">server1</string>
