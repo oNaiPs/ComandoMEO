@@ -78,9 +78,12 @@ public class MainActivity extends Activity {
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 
+		requestWindowFeature(Window.FEATURE_NO_TITLE);
+
+		setContentView(R.layout.main);
+
 		//check arrays
 		Keys.checkArrays();
-		requestWindowFeature(Window.FEATURE_NO_TITLE);
 
 		mVibrator = (Vibrator) getSystemService(Context.VIBRATOR_SERVICE);
 		mDisplay = getWindowManager().getDefaultDisplay();
@@ -98,8 +101,6 @@ public class MainActivity extends Activity {
 		if (mPreferences.getBoolean(getString(R.string.ui_fullscreen_key), false)) {
 			getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
 		}
-
-		setContentView(R.layout.main);
 
 		if (mPreferences.getBoolean(getString(R.string.ui_viewad_key), true)) {
 
