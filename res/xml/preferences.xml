@@ -26,10 +26,10 @@
             android:key="@string/ui_scale_key"
             android:title="@string/ui_scale_title" />
         <ListPreference
-            android:defaultValue="pgupdown"
+            android:defaultValue="@string/pgupdown"
             android:entries="@array/vol_bindings"
             android:entryValues="@array/vol_idents"
-            android:key="volkeys"
+            android:key="@string/vol_key"
             android:summary="@string/map_volume_keys_summary"
             android:title="@string/map_volume_keys" >
         </ListPreference>

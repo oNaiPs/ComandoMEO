@@ -21,8 +21,8 @@
         <item>Desativado</item>
     </string-array>
     <string-array name="vol_idents">
-        <item>pgupdown</item>
-        <item>volupdown</item>
+        <item>@string/pgupdown</item>
+        <item>@string/volupdown</item>
         <item>off</item>
     </string-array>
     <string-array name="ui_scale_strings">
@@ -65,11 +65,11 @@
     <string name="connected_to_box">Ligado a meo: %1$s</string>
     <string name="project_website">https://github.com/oNaiPs/ComandoMEO</string>
     <string name="enable_vibration">Vibrar os botões</string>
-
+    <string name="ui_scale_title">Tamanho do comando</string>
+    
     <color name="white_color">#fff</color>
     <color name="gray_color">#aaa</color>
 
-    <string name="ui_scale_title">Tamanho do comando</string>
     <string name="ui_fullscreen_key">fullscreen</string>
     <string name="ui_viewad_key">viewad</string>
     <string name="ui_about_key">about</string>
@@ -77,6 +77,9 @@
     <string name="ui_vibration_key">vibration</string>
     <string name="ui_scale_default">100</string>
     <string name="active_server_key">active</string>
+    <string name="pgupdown">pgupdown</string>
+    <string name="volupdown">volupdown</string>
+    <string name="vol_key">vol_mappings</string>
     <string name="server_1_key">server1</string>
     <string name="server_2_key">server2</string>
     <string name="server_3_key">server3</string>

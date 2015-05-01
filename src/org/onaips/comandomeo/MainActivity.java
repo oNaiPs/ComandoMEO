@@ -176,28 +176,26 @@ public class MainActivity extends Activity {
 	}
 
 	public boolean onKeyDown(int keyCode, KeyEvent event) {
-		String vol_binding = mPreferences.getString("volkeys", "pgupdown");
+		String volBinding = mPreferences.getString(
+				getString(R.string.vol_key), 
+				getString(R.string.pgupdown));
 
-		if (keyCode == KeyEvent.KEYCODE_VOLUME_DOWN || keyCode == KeyEvent.KEYCODE_VOLUME_UP)
-		{
+		if (keyCode == KeyEvent.KEYCODE_VOLUME_DOWN || keyCode == KeyEvent.KEYCODE_VOLUME_UP) {
 			if (keyCode == KeyEvent.KEYCODE_VOLUME_DOWN){
-				if (vol_binding.equals("pgupdown"))
-					mSocketOutput.println("key=34");
-				else if (vol_binding.equals("volupdown"))
-					mSocketOutput.println("key=174");
-				mSocketOutput.flush();
-				return true;
+				if (volBinding.equals(getString(R.string.pgupdown))) {
+					sendButton(34);
+				} else if (volBinding.equals(getString(R.string.volupdown))) {
+					sendButton(174);
+				}
+			} else if(keyCode == KeyEvent.KEYCODE_VOLUME_UP){
+				if (volBinding.equals(getString(R.string.pgupdown))) {
+					sendButton(33);
+				} else if (volBinding.equals(getString(R.string.volupdown))) {
+					sendButton(175);
+				}
 			}
-			else if(keyCode == KeyEvent.KEYCODE_VOLUME_UP){
-				if (vol_binding.equals("pgupdown"))
-					mSocketOutput.println("key=33");
-				else if (vol_binding.equals("volupdown"))
-					mSocketOutput.println("key=175");
-				mSocketOutput.flush();
-				return true;
-			}
-		}else if (keyCode==KeyEvent.KEYCODE_BACK)
-		{
+			return true;
+		} else if (keyCode==KeyEvent.KEYCODE_BACK) {
 			moveTaskToBack(true);
 		}
 		return false;
