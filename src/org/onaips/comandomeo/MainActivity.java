@@ -196,7 +196,7 @@ public class MainActivity extends Activity {
 				}
 			}
 			return true;
-		} else if (keyCode==KeyEvent.KEYCODE_BACK) {
+		} else if (keyCode == KeyEvent.KEYCODE_BACK) {
 			moveTaskToBack(true);
 		}
 		return false;
@@ -205,7 +205,8 @@ public class MainActivity extends Activity {
 	public void findAndCommitButton(float x,float y) {
 		float realScale = mDisplayWidth / (float)REAL_COMANDO_WIDTH;
 
-		float userScale = mPreferences.getInt("scaleComando", 100);
+		int userScale = Integer.valueOf(
+				mPreferences.getString(getString(R.string.ui_scale_key), "100"));
 		realScale *= userScale / 100.0F;
 
 		x -= (mDisplayWidth - (userScale * mDisplayWidth) / 100.0F) / 2.0F;
@@ -228,6 +229,7 @@ public class MainActivity extends Activity {
 	}
 
 	public void sendButton(final int button) {
+		Log.d(TAG, "sendButton " + button);
 		mConnectionHandler.post(new Runnable() {
 			@Override
 			public void run() {
