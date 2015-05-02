@@ -137,7 +137,9 @@ public class MainActivity extends Activity {
 		mGlobalScale = mDisplayWidth / (float) img.getWidth();
 
 		int userScale = Integer.valueOf(
-				mPreferences.getString(getString(R.string.ui_scale_key), "100"));
+				mPreferences.getString(
+						getString(R.string.ui_scale_key),
+						getString(R.string.ui_scale_default)));
 		mGlobalScale *= userScale/100.0F;
 
 		Log.v(TAG, "Display Width= " + mDisplayWidth + "\t" + "Comando " + img.getWidth() + "x" + img.getHeight() +  "\tscale=" + mGlobalScale);
@@ -206,7 +208,9 @@ public class MainActivity extends Activity {
 		float realScale = mDisplayWidth / (float)REAL_COMANDO_WIDTH;
 
 		int userScale = Integer.valueOf(
-				mPreferences.getString(getString(R.string.ui_scale_key), "100"));
+				mPreferences.getString(
+						getString(R.string.ui_scale_key),
+						getString(R.string.ui_scale_default)));
 		realScale *= userScale / 100.0F;
 
 		x -= (mDisplayWidth - (userScale * mDisplayWidth) / 100.0F) / 2.0F;
