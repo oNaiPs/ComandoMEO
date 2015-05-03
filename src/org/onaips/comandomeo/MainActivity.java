@@ -82,6 +82,9 @@ public class MainActivity extends Activity {
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
+		
+		//load default value preferences for the first time
+		PreferenceManager.setDefaultValues(this, R.xml.preferences, false);
 
 		requestWindowFeature(Window.FEATURE_NO_TITLE);
 
