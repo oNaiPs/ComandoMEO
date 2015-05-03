@@ -11,6 +11,7 @@ apply plugin: 'android'
 
 dependencies {
     compile 'com.google.android.gms:play-services:6.5.87'
+    compile fileTree(dir: 'libs', include: '*.jar');
 }
 
 android {
