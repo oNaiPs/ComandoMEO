@@ -2,6 +2,7 @@ package org.onaips.comandomeo;
 
 import java.io.BufferedReader;
 import java.io.IOException;
+import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.PrintWriter;
 import java.net.InetAddress;
@@ -18,8 +19,9 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
-import android.graphics.Matrix;
+import android.graphics.Canvas;
+import android.graphics.Picture;
+import android.graphics.Rect;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.HandlerThread;
@@ -41,6 +43,9 @@ import android.widget.Toast;
 
 import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.AdView;
+import com.larvalabs.svgandroid.SVG;
+import com.larvalabs.svgandroid.SVGParseException;
+import com.larvalabs.svgandroid.SVGParser;
 
 public class MainActivity extends Activity {
 	private static final String TAG = MainActivity.class.getSimpleName();
@@ -132,31 +137,38 @@ public class MainActivity extends Activity {
 	}
 
 	public void adjustRemote() {
-		Bitmap img = BitmapFactory.decodeResource(getResources(), R.drawable.comando);
+		try {
+			InputStream remoteSvg = getResources().openRawResource(R.raw.meo);
+			SVG svg = SVGParser.getSVGFromInputStream(remoteSvg);
+			Picture remotePicture = svg.getPicture();
 
-		mGlobalScale = mDisplayWidth / (float) img.getWidth();
+			mGlobalScale = mDisplayWidth / (float) remotePicture.getWidth();
 
-		int userScale = Integer.valueOf(
-				mPreferences.getString(
-						getString(R.string.ui_scale_key),
-						getString(R.string.ui_scale_default)));
-		mGlobalScale *= userScale/100.0F;
+			int userScale = Integer.valueOf(
+					mPreferences.getString(
+							getString(R.string.ui_scale_key),
+							getString(R.string.ui_scale_default)));
+			mGlobalScale *= userScale/100.0F;
 
-		Log.v(TAG, "Display Width= " + mDisplayWidth + "\t" + "Comando " + img.getWidth() + "x" + img.getHeight() +  "\tscale=" + mGlobalScale);
+			Log.v(TAG, "Display w:" + mDisplayWidth + "\tremote: " +
+					remotePicture.getWidth() + "x" + remotePicture.getHeight() +
+					"\tscale=" + mGlobalScale);
 
-		// create a matrix for the manipulation
-		Matrix matrix = new Matrix();
+			int newWidth =(int) (remotePicture.getWidth() * mGlobalScale);
+			int newHeight = (int) (remotePicture.getHeight() * mGlobalScale);
 
-		// resize the bit map
-		matrix.postScale(mGlobalScale, mGlobalScale);
+			// draw the svg in a bitmap and add to view
+			Bitmap resizedBitmap = Bitmap.createBitmap(newWidth, newHeight, Bitmap.Config.ARGB_8888);
 
-		// recreate the new Bitmap and set it back
-		Bitmap resizedBitmap = Bitmap.createBitmap(img, 0, 0,img.getWidth(), img.getHeight(), matrix, true);
+			Canvas tempCanvas = new Canvas(resizedBitmap);
+			remotePicture.draw(tempCanvas);
+			tempCanvas.drawPicture(remotePicture, new Rect(0, 0, newWidth, newHeight));
 
-		//remind the GC this image is ready to be deleted
-		img.recycle();
-
-		mRemoteView.setImageBitmap(resizedBitmap);
+			mRemoteView.setImageBitmap(resizedBitmap);
+		} catch (Exception e) {
+			Toast.makeText(this, R.string.load_remote_error, Toast.LENGTH_LONG).show();
+			e.printStackTrace();
+		}
 	}
 
 	public void disconnect() {

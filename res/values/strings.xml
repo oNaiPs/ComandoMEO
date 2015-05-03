@@ -66,7 +66,8 @@
     <string name="project_website">https://github.com/oNaiPs/ComandoMEO</string>
     <string name="enable_vibration">Vibrar os botões</string>
     <string name="ui_scale_title">Tamanho do comando</string>
-    
+    <string name="load_remote_error">Ocorreu um erro a carregar o comando.</string>
+
     <color name="white_color">#fff</color>
     <color name="gray_color">#aaa</color>
 
