@@ -12,7 +12,7 @@
         android:layout_height="wrap_content" >
 
         <ImageView
-            android:id="@+id/ImageView01"
+            android:id="@+id/remoteView"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="right" >

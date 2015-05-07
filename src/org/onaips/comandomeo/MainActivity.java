@@ -20,8 +20,8 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
+import android.graphics.Matrix;
 import android.graphics.Picture;
-import android.graphics.Rect;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.HandlerThread;
@@ -44,15 +44,10 @@ import android.widget.Toast;
 import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.AdView;
 import com.larvalabs.svgandroid.SVG;
-import com.larvalabs.svgandroid.SVGParseException;
 import com.larvalabs.svgandroid.SVGParser;
 
 public class MainActivity extends Activity {
 	private static final String TAG = MainActivity.class.getSimpleName();
-
-	private static final int REAL_COMANDO_WIDTH = 452;
-	private static final int REAL_COMANDO_HEIGHT = 1987;
-
 	private static final int REMOTE_PORT = 8082;
 	private static final int ADDRESS_REACH_TIMEOUT = 3000;
 
@@ -61,6 +56,7 @@ public class MainActivity extends Activity {
 	private static final int MENU_SELECTMEO = 2;
 
 	private static final int VIBRATION_PERIOD = 50;
+	private static final boolean DEBUG_BUTTONS = false;
 
 	private HandlerThread mConnectionThread;
 	private Handler mConnectionHandler;
@@ -78,20 +74,19 @@ public class MainActivity extends Activity {
 	private float mGlobalScale;
 	private ImageView mRemoteView;
 
+	private final Buttons mButtons = new Buttons();
+
 	/** Called when the activity is first created. */
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		
+
 		//load default value preferences for the first time
 		PreferenceManager.setDefaultValues(this, R.xml.preferences, false);
 
 		requestWindowFeature(Window.FEATURE_NO_TITLE);
 
 		setContentView(R.layout.main);
-
-		//check arrays
-		Keys.checkArrays();
 
 		mVibrator = (Vibrator) getSystemService(Context.VIBRATOR_SERVICE);
 		mDisplay = getWindowManager().getDefaultDisplay();
@@ -111,14 +106,13 @@ public class MainActivity extends Activity {
 		}
 
 		if (mPreferences.getBoolean(getString(R.string.ui_viewad_key), true)) {
-
 			AdView adView = (AdView) findViewById(R.id.adView);
 			AdRequest adRequest = new AdRequest.Builder()
 			.build();
 			adView.loadAd(adRequest);
 		}
 
-		mRemoteView = (ImageView) findViewById(R.id.ImageView01);
+		mRemoteView = (ImageView) findViewById(R.id.remoteView);
 		mRemoteView.setOnTouchListener(new View.OnTouchListener() {
 			@SuppressLint("ClickableViewAccessibility")
 			@Override
@@ -129,9 +123,9 @@ public class MainActivity extends Activity {
 			}
 		}); 
 
-		findViewById(R.id.ImageView01).setOnClickListener(new View.OnClickListener() {
-			public void onClick(View arg0) {
-				findAndCommitButton(mLastX, mLastY);
+		mRemoteView.setOnClickListener(new View.OnClickListener() {
+			public void onClick(View view) {
+				findButtonAndSend(mLastX, mLastY);
 			} 
 		});	
 
@@ -157,15 +151,20 @@ public class MainActivity extends Activity {
 					remotePicture.getWidth() + "x" + remotePicture.getHeight() +
 					"\tscale=" + mGlobalScale);
 
-			int newWidth =(int) (remotePicture.getWidth() * mGlobalScale);
-			int newHeight = (int) (remotePicture.getHeight() * mGlobalScale);
-
 			// draw the svg in a bitmap and add to view
-			Bitmap resizedBitmap = Bitmap.createBitmap(newWidth, newHeight, Bitmap.Config.ARGB_8888);
+			Bitmap resizedBitmap = Bitmap.createBitmap(
+					(int) (remotePicture.getWidth() * mGlobalScale),
+					(int) (remotePicture.getHeight() * mGlobalScale),
+					Bitmap.Config.ARGB_8888);
 
 			Canvas tempCanvas = new Canvas(resizedBitmap);
+			Matrix matrix = new Matrix();
+			matrix.setScale(mGlobalScale, mGlobalScale);
+			tempCanvas.setMatrix(matrix);
 			remotePicture.draw(tempCanvas);
-			tempCanvas.drawPicture(remotePicture, new Rect(0, 0, newWidth, newHeight));
+			if (DEBUG_BUTTONS) {
+				mButtons.renderDebug(tempCanvas);
+			}
 
 			mRemoteView.setImageBitmap(resizedBitmap);
 		} catch (Exception e) {
@@ -219,46 +218,39 @@ public class MainActivity extends Activity {
 		return false;
 	}
 
-	public void findAndCommitButton(float x,float y) {
-		float realScale = mDisplayWidth / (float)REAL_COMANDO_WIDTH;
-
+	public void findButtonAndSend(float x,float y) {
 		int userScale = Integer.valueOf(
 				mPreferences.getString(
 						getString(R.string.ui_scale_key),
 						getString(R.string.ui_scale_default)));
-		realScale *= userScale / 100.0F;
-
 		x -= (mDisplayWidth - (userScale * mDisplayWidth) / 100.0F) / 2.0F;
+		x /= mGlobalScale;
+		y /= mGlobalScale;
 
-		x /= realScale;
-		y /= realScale;
-
-		for (int i = 0; i < Keys.meo_key.length; i++){
-			if (x > Keys.meo_1_x[i] &&
-					x < Keys.meo_2_x[i] &&
-					y > Keys.meo_1_y[i] &&
-					y < Keys.meo_2_y[i]) {
-				if (mPreferences.getBoolean(getString(R.string.ui_vibration_key), true)) {
-					mVibrator.vibrate(VIBRATION_PERIOD);
-				}
-				sendButton(Keys.meo_key[i]);
-				return;
+		int keycode = mButtons.get((int)x, (int)y);
+		if (keycode >= 0) {
+			if (mPreferences.getBoolean(getString(R.string.ui_vibration_key), true)) {
+				mVibrator.vibrate(VIBRATION_PERIOD);
 			}
-		}			
+			sendButton(keycode);
+		}
 	}
 
+	/**
+	 * Sends provided keycode to connected server.
+	 */
 	public void sendButton(final int button) {
 		Log.d(TAG, "sendButton " + button);
 		mConnectionHandler.post(new Runnable() {
 			@Override
 			public void run() {
 				if (mSocket != null && mSocket.isConnected()) {
-					if (button == 0) {
-						Toast.makeText(MainActivity.this, R.string.non_implemented_keyboard_warn,
-								Toast.LENGTH_LONG).show();
-					} else {
+					if (button != 0) {
 						mSocketOutput.println("key=" + String.valueOf(button));
 						mSocketOutput.flush();
+					} else {
+						Toast.makeText(MainActivity.this, R.string.non_implemented_keyboard_warn,
+								Toast.LENGTH_LONG).show();
 					}
 				} else {
 					Toast.makeText(MainActivity.this, R.string.inactive_connection_to_box,
@@ -268,6 +260,9 @@ public class MainActivity extends Activity {
 		});
 	}
 
+	/**
+	 * Connects to the currently selected server.
+	 */
 	public void connect() {
 		mConnectionHandler.post(new Runnable() {
 
@@ -321,6 +316,11 @@ public class MainActivity extends Activity {
 			}
 		});
 	}
+	
+	public void reconnect() {
+		disconnect();
+		connect();
+	}
 
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
@@ -351,58 +351,35 @@ public class MainActivity extends Activity {
 			System.exit(1);
 			break; 
 		case MENU_RECONNECT:
-			disconnect();
-			connect();
+			reconnect();
 			break;
 		case MENU_SELECTMEO:
-			final String[] meo_strings = getResources().getStringArray(R.array.meo_string);
-			final String[] meo_servers = getResources().getStringArray(R.array.meo_servers);
+			final String[] meoStrings = getResources().getStringArray(R.array.meo_string);
+			final String[] meoServers = getResources().getStringArray(R.array.meo_servers);
 
 			String activeServer = mPreferences.getString(
 					getString(R.string.active_server_key), getString(R.string.server_1_key));
 
-			int activeServerIndex;
-			for (activeServerIndex = 0; activeServerIndex < meo_servers.length; activeServerIndex++) {
-				if (meo_servers[activeServerIndex].equals(activeServer)) {
+			int idx;
+			for (idx = 0; idx < meoServers.length; idx++) {
+				if (meoServers[idx].equals(activeServer)) {
 					break;
 				}
 			}
 
 			new AlertDialog.Builder(this)
 			.setTitle(R.string.select_active_box)
-			.setSingleChoiceItems(meo_strings, activeServerIndex, new DialogInterface.OnClickListener() {
+			.setSingleChoiceItems(meoStrings, idx, new DialogInterface.OnClickListener() {
 				public void onClick(DialogInterface dialog, int item) {
 					mPreferences.edit()
-					.putString(getString(R.string.active_server_key), meo_servers[item])
+					.putString(getString(R.string.active_server_key), meoServers[item])
 					.commit();
 					dialog.dismiss();
-					disconnect();
-					connect();
+					reconnect();
 				}
 			})
 			.create().show();
 		}
 		return true;
-	}
-
-	private void unbindDrawables(View view) {
-		if (view.getBackground() != null) {
-			view.getBackground().setCallback(null);
-		}
-		if (view instanceof ViewGroup) {
-			for (int i = 0; i < ((ViewGroup) view).getChildCount(); i++) {
-				unbindDrawables(((ViewGroup) view).getChildAt(i));
-			}
-			((ViewGroup) view).removeAllViews();
-		}
-	}
-
-	@Override
-	protected void onDestroy() {
-		super.onDestroy();
-
-		ImageView v = (ImageView)findViewById(R.id.ImageView01);
-		unbindDrawables(v);
-		System.gc();
 	}
 }	
