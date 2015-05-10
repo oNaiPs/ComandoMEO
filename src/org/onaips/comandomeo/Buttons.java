@@ -16,6 +16,9 @@ import android.graphics.Rect;
 public class Buttons {
 	List<Button> mButtons = new ArrayList<Buttons.Button>();
 
+	//special buttons
+	public static final int KEYCODE_APP_SETTINGS = 1234;
+
 	public class Button {
 		String mName;
 		Rect mPosition;
@@ -29,6 +32,8 @@ public class Buttons {
 	}
 
 	Buttons() {
+		mButtons.add(new Button("sett", KEYCODE_APP_SETTINGS, 10, 22, 55, 55));
+
 		mButtons.add(new Button("power", 233, 230, 22, 80, 80));
 
 		mButtons.add(new Button("1", 49, 10, 106, 80, 80));

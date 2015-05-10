@@ -35,7 +35,6 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.View;
-import android.view.ViewGroup;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.ImageView;
@@ -232,7 +231,11 @@ public class MainActivity extends Activity {
 			if (mPreferences.getBoolean(getString(R.string.ui_vibration_key), true)) {
 				mVibrator.vibrate(VIBRATION_PERIOD);
 			}
-			sendButton(keycode);
+			if (keycode == Buttons.KEYCODE_APP_SETTINGS) {
+				openOptionsMenu();
+			} else {
+				sendButton(keycode);
+			}
 		}
 	}
 
