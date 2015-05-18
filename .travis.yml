@@ -4,7 +4,7 @@ script:
 android:
   components:
   - extra-google-google_play_services
-  - build-tools-19.1.0
+  - build-tools-22.0.1
   - android-19
 deploy:
   provider: releases
