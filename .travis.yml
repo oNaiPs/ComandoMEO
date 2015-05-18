@@ -5,7 +5,7 @@ android:
   components:
   - extra-google-google_play_services
   - build-tools-22.0.1
-  - android-19
+  - android-22
 deploy:
   provider: releases
   api_key:
