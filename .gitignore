@@ -32,3 +32,6 @@ local.properties
 .Trashes
 ehthumbs.db
 Thumbs.db
+
+# Keystore
+keystore.jks

@@ -1,6 +1,10 @@
 language: android
 script:
-  - ./gradlew assembleDebug
+- "./gradlew assembleRelease"
+env:
+  global:
+  - secure: YbQAu5sfj7n2L0ImVuL7MUcSzeA8T86qkCl2Hv1LEBh1il5eMDfjzMiAHwD8oJp7CTAUT/dQal52QWfl8zn8AfpYLQpyqkciVeLt6QjmQvKuKfRImmUeLsqA2T8hRddBy+4WKBmMmoMsuQTTb3ZIKSXs1PQRTpiy1HiztZIr848=
+  - secure: QeXlY0a4TbVnKXtetZGsOuoWdBt8OGKzYmCEJwk628fEbxLlpy1BsfyZXCrV97Mf0pi46P5+o9lnWRdRsePGVNh0Up/hO2BWXz+RzUAVFrYxSQxsw6G8SqUGo3jlWX4b+0aWuii5xNl+qperKSB+yVOSvKSi7CCgqmzPJ8cn/ns=
 android:
   components:
   - build-tools-28.0.2
@@ -9,7 +13,10 @@ deploy:
   provider: releases
   api_key:
     secure: gw+yomXdfbHKcXl5AhLIy0RPccA3sA1+5q+TdsJRvMv8g0k6Qsdrx8lzMBAKdh790EbnbY8rI8JhoX4AazMwN66pV/EaOo5abVaHSORxEqYXMwim4YZPsOKeD0gGn7XRXQvoSsMqm5DJWnQtMKNXiqV1E4BT/8uua2BdmkL+kWE=
-  file: ./build/outputs/apk/ComandoMEO-debug.apk
+  file: "./build/outputs/apk/release/ComandoMEO-release.apk"
   on:
     tags: true
     repo: oNaiPs/ComandoMEO
+before_install:
+- openssl aes-256-cbc -K $encrypted_80e139eec905_key -iv $encrypted_80e139eec905_iv
+  -in keystore.jks.enc -out keystore.jks -d
