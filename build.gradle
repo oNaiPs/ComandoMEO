@@ -19,12 +19,12 @@ apply plugin: 'com.android.application'
 
 dependencies {
     implementation 'com.google.android.gms:play-services-ads:15.0.1'
-    implementation fileTree(dir: 'libs', include: '*.jar');
+    implementation 'com.caverock:androidsvg-aar:1.3'
 }
 
 android {
     compileSdkVersion 28
-    buildToolsVersion "28.0.2"
+    buildToolsVersion '28.0.2'
 
     signingConfigs {
         release
