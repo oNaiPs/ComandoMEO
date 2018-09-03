@@ -10,8 +10,8 @@
     -->
 
     <uses-sdk
-        android:minSdkVersion="9"
-        android:targetSdkVersion="13" >
+        android:minSdkVersion="14"
+        android:targetSdkVersion="14" >
     </uses-sdk>
 
     <uses-permission android:name="android.permission.INTERNET" />
