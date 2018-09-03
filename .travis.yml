@@ -12,7 +12,7 @@ android:
 deploy:
   provider: releases
   api_key:
-    secure: gw+yomXdfbHKcXl5AhLIy0RPccA3sA1+5q+TdsJRvMv8g0k6Qsdrx8lzMBAKdh790EbnbY8rI8JhoX4AazMwN66pV/EaOo5abVaHSORxEqYXMwim4YZPsOKeD0gGn7XRXQvoSsMqm5DJWnQtMKNXiqV1E4BT/8uua2BdmkL+kWE=
+    secure: R7ma3B/zDpBoIoLyT44mG7Wa3XMlLg2gdrtiYcMkjPmhi2/U6Vqh8sKviQ0rXU6cch7gbyRXjXzWDC0dy2VNEQ9mf5PcYDx1nXWle+bhdDyv+P9uKcExK+knL3sgh6UdJ68svsXi5HGGqlaxOJZ9pkSKjZ/wgoCvwX9uH2yPmi8=
   file: "./build/outputs/apk/release/ComandoMEO-release.apk"
   on:
     tags: true
