@@ -87,6 +87,7 @@
     <string name="server_1_default">192.168.1.64</string>
     <string name="server_2_default">192.168.1.65</string>
     <string name="server_3_default">192.168.1.66</string>
+    <string name="admob_app_id">ca-app-pub-6447557904423437~4155082888</string>
     <string name="banner_ad_unit_id">ca-app-pub-6447557904423437/2246374888</string>
 
 </resources>

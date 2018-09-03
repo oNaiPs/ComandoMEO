@@ -20,6 +20,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
+import android.graphics.Color;
 import android.graphics.Matrix;
 import android.graphics.Picture;
 import android.os.Bundle;
@@ -28,6 +29,7 @@ import android.os.HandlerThread;
 import android.os.Vibrator;
 import android.preference.PreferenceManager;
 import android.util.Log;
+import android.util.Size;
 import android.view.Display;
 import android.view.KeyEvent;
 import android.view.Menu;
@@ -40,10 +42,10 @@ import android.view.WindowManager;
 import android.widget.ImageView;
 import android.widget.Toast;
 
+import com.caverock.androidsvg.SVG;
 import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.AdView;
-import com.larvalabs.svgandroid.SVG;
-import com.larvalabs.svgandroid.SVGParser;
+import com.google.android.gms.ads.MobileAds;
 
 public class MainActivity extends Activity {
 	private static final String TAG = MainActivity.class.getSimpleName();
@@ -105,7 +107,7 @@ public class MainActivity extends Activity {
 		}
 
 		if (mPreferences.getBoolean(getString(R.string.ui_viewad_key), true)) {
-			AdView adView = (AdView) findViewById(R.id.adView);
+			AdView adView = findViewById(R.id.adView);
 			AdRequest adRequest = new AdRequest.Builder()
 			.build();
 			adView.loadAd(adRequest);
@@ -120,23 +122,25 @@ public class MainActivity extends Activity {
 				mLastY = event.getY();
 				return false;
 			}
-		}); 
+		});
 
 		mRemoteView.setOnClickListener(new View.OnClickListener() {
 			public void onClick(View view) {
 				findButtonAndSend(mLastX, mLastY);
-			} 
-		});	
+			}
+		});
+
+		MobileAds.initialize(this);
 
 		adjustRemote();
-		connect();		
+		connect();
 	}
 
 	public void adjustRemote() {
 		try {
 			InputStream remoteSvg = getResources().openRawResource(R.raw.meo);
-			SVG svg = SVGParser.getSVGFromInputStream(remoteSvg);
-			Picture remotePicture = svg.getPicture();
+			SVG svg = SVG.getFromInputStream(remoteSvg);
+			Picture remotePicture = svg.renderToPicture();
 
 			mGlobalScale = mDisplayWidth / (float) remotePicture.getWidth();
 
@@ -193,7 +197,7 @@ public class MainActivity extends Activity {
 
 	public boolean onKeyDown(int keyCode, KeyEvent event) {
 		String volBinding = mPreferences.getString(
-				getString(R.string.vol_key), 
+				getString(R.string.vol_key),
 				getString(R.string.pgupdown));
 
 		if (keyCode == KeyEvent.KEYCODE_VOLUME_DOWN || keyCode == KeyEvent.KEYCODE_VOLUME_UP) {
@@ -289,7 +293,7 @@ public class MainActivity extends Activity {
 					InetAddress addr = InetAddress.getByName(server);
 
 					if (!addr.isReachable(ADDRESS_REACH_TIMEOUT)) {
-						Toast.makeText(MainActivity.this, getString(R.string.timeout_finding_box, 
+						Toast.makeText(MainActivity.this, getString(R.string.timeout_finding_box,
 								activeServer, server), Toast.LENGTH_LONG).show();
 						return;
 					}
@@ -298,20 +302,20 @@ public class MainActivity extends Activity {
 					mSocketOutput = new PrintWriter(mSocket.getOutputStream(), true);
 					mSocketInput = new BufferedReader(new InputStreamReader(mSocket.getInputStream()));
 
-					mSocketInput.readLine();			
+					mSocketInput.readLine();
 
-					Toast.makeText(MainActivity.this, 
+					Toast.makeText(MainActivity.this,
 							getString(R.string.connected_to_box, mSocket.getInetAddress().toString()),
 							Toast.LENGTH_SHORT).show();
 				} catch (UnknownHostException e) {
 					mSocket = null;
-					Toast.makeText(MainActivity.this, 
-							getString(R.string.box_not_found, activeServer, server), 
+					Toast.makeText(MainActivity.this,
+							getString(R.string.box_not_found, activeServer, server),
 							Toast.LENGTH_LONG).show();
 					e.printStackTrace();
 				} catch (IOException e) {
-					Toast.makeText(MainActivity.this, 
-							getString(R.string.box_not_found, activeServer, server), 
+					Toast.makeText(MainActivity.this,
+							getString(R.string.box_not_found, activeServer, server),
 							Toast.LENGTH_LONG).show();
 					mSocket = null;
 					e.printStackTrace();
@@ -319,7 +323,7 @@ public class MainActivity extends Activity {
 			}
 		});
 	}
-	
+
 	public void reconnect() {
 		disconnect();
 		connect();
@@ -347,12 +351,12 @@ public class MainActivity extends Activity {
 			// Launch Preference activity
 			startActivity(new Intent(MainActivity.this, Preferences.class));
 
-			Toast.makeText(MainActivity.this, R.string.reconnect_after_changes_warn, 
+			Toast.makeText(MainActivity.this, R.string.reconnect_after_changes_warn,
 					Toast.LENGTH_LONG).show();
 			break;
 		case MENU_QUIT:
 			System.exit(1);
-			break; 
+			break;
 		case MENU_RECONNECT:
 			reconnect();
 			break;
@@ -385,4 +389,4 @@ public class MainActivity extends Activity {
 		}
 		return true;
 	}
-}	
+}
