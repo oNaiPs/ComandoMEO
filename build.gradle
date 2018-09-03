@@ -1,23 +1,31 @@
 buildscript {
     repositories {
+        google()
         mavenCentral()
     }
     dependencies {
-        classpath 'com.android.tools.build:gradle:1.2.2'
+        classpath 'com.android.tools.build:gradle:3.1.4'
+    }
+}
+
+allprojects {
+    repositories {
+        google()
+        jcenter()
     }
 }
 
 apply plugin: 'com.android.application'
 
 dependencies {
-    compile 'com.google.android.gms:play-services-ads:7.3.0'
-    compile fileTree(dir: 'libs', include: '*.jar');
+    implementation 'com.google.android.gms:play-services-ads:15.0.1'
+    implementation fileTree(dir: 'libs', include: '*.jar');
 }
 
 android {
-    compileSdkVersion 22
-    buildToolsVersion "22.0.1"
-    
+    compileSdkVersion 28
+    buildToolsVersion "28.0.2"
+
     signingConfigs {
         release
     }
